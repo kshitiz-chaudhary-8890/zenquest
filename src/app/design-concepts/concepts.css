@@ -1,0 +1,128 @@
+/* Shared scaffolding for /design-concepts previews only. */
+/* Hides the production chrome whenever a concept page is on screen. */
+body:has([data-concept-shell]) .site-header,
+body:has([data-concept-shell]) .footer,
+body:has([data-concept-shell]) .booking-dock {
+  display: none !important;
+}
+body:has([data-concept-shell]) {
+  background: var(--concept-bg, #f4f0e8);
+}
+
+.concept-shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--concept-bg, #f4f0e8);
+}
+.concept-shell > main {
+  flex: 1;
+}
+
+.concept-switcher {
+  position: fixed;
+  z-index: 90;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 999px;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(128, 63, 157, 0.35);
+}
+.concept-switcher.is-dark {
+  background: rgba(20, 11, 27, 0.72);
+  color: #f2e9dc;
+}
+.concept-switcher.is-light {
+  background: rgba(255, 255, 255, 0.78);
+  color: #2c2130;
+  box-shadow: 0 6px 24px rgba(57, 32, 68, 0.12);
+}
+.concept-switcher a,
+.concept-switcher-current {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.concept-switcher a:hover {
+  background: rgba(128, 63, 157, 0.16);
+}
+.concept-switcher-current {
+  background: #803f9d;
+  color: #fff;
+}
+@media (max-width: 560px) {
+  .concept-switcher {
+    gap: 2px;
+    padding: 4px;
+    max-width: calc(100vw - 24px);
+    overflow-x: auto;
+  }
+  .concept-switcher a,
+  .concept-switcher-current {
+    padding: 0 10px;
+    min-height: 32px;
+  }
+}
+
+/* Shared FAQ behaviour; each concept restyles .concept-faq-item internals. */
+.concept-faq-item h3 {
+  margin: 0;
+  font: inherit;
+}
+.concept-faq-item button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  min-height: 44px;
+}
+.concept-faq-mark {
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  transition: transform 0.2s ease;
+}
+.concept-faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.24s ease,
+    visibility 0.24s;
+}
+.concept-faq-answer[data-open="true"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+.concept-faq-answer > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concept-faq-answer,
+  .concept-faq-mark {
+    transition: none !important;
+  }
+}
